@@ -342,7 +342,7 @@ function <portlet:namespace />getguestip(json)
 		}
 	function reloadPage()
 	   {
-	   		//alert( ' reloadPage is called ');
+	   		
 	   		window.location.reload();
 	   		
 	   	}
