@@ -75,6 +75,10 @@ public class GeoIPUsersMapDAO {
 	
 	private static final String _GET_USER_LOCATION = "select location from  User_  where userid=?;";
 	
+	private static final String _GET_CODE3_BY_CODE2 = "select iso3code from  mapping  where iso2code=?;";
+	
+	
+	
 	public String getUserCode( String userId )
 	{
 		System.out.println( " &&&&&&&&&&&&&&&&&  getUserCode  userId : "+userId );
@@ -352,6 +356,34 @@ public class GeoIPUsersMapDAO {
 		} catch (Exception e) {e.printStackTrace();}
 		return ret;
 	}
+	public static String getCountryCode3Digit( String code2Digit,LookupService lookupService)
+	{
+		System.out.println("******** getCountryCode3Digit is called with code2Digit :"+code2Digit );
+		String code3digit="";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try 
+		{
+			if (lookupService != null && code2Digit!="" )
+			{			
+				con = LPortalConnectionPool.getConnection();
+				System.out.println("2"+con);
+				ps = con.prepareStatement(_GET_CODE3_BY_CODE2);
+				ps.setString(1, code2Digit);
+				rs=ps.executeQuery();
+				System.out.println("3 code2Digit : "+code2Digit);
+				while (rs.next())
+				{
+					code3digit = rs.getString(1);
+				}
+			}
+		} catch (Exception e) {e.printStackTrace();}
+		
+		System.out.println("******** getCountryCode3Digit is called code3digit :"+code3digit );
+		return code3digit; 
+	}
 	public static List<MarkVO> getUsersData( long userId) {
 		System.out.println("******** getUsersData is called with userId :"+userId );
 		
@@ -384,6 +416,11 @@ public class GeoIPUsersMapDAO {
 						//location = lookupService.getLocation(ip);
 						location = new Location();
 						location.countryCode=rs.getString(6);
+						if( location.countryCode!=null   )
+						{
+							location.countryCode3Digit=getCountryCode3Digit( rs.getString(6), lookupService );
+						}
+						
 						System.out.println(" location.countryCode : "+ location.countryCode );
 						CountryCodes cc = new CountryCodes();
 						location.countryName=cc.getCountry(location.countryCode );

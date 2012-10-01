@@ -94,13 +94,36 @@
     		 projectVisa=  projectVisa.substring(0,1).toUpperCase()  + projectVisa.substring(1, projectVisa.length()).toLowerCase();  
     	}
     	//out.println( htmlCode   );
+    	
+    	String guardian ="world/"+projectVisa.toLowerCase();
+ 		if(countryName.equalsIgnoreCase("united arab emirates")){
+ 			guardian ="world/united-arab-emirates"; 
+ 		}else if(countryName.equalsIgnoreCase("dominican republic")){
+ 				  guardian ="world/dominicanrepublic";
+ 		}else if(countryName.equalsIgnoreCase("united states")){
+ 			 guardian ="usa";  			
+		}else if(countryName.equalsIgnoreCase("united kingdom")){
+		 guardian ="uk"; 
+		}
+ 		
+ 		String countryCode3Digit = mark.getLocation().countryCode3Digit;
+ 		if( countryCode3Digit!=null)
+ 		{
+ 			countryCode3Digit= countryCode3Digit.toLowerCase();
+ 			if(countryCode3Digit.equals("uae") )
+ 			{
+ 				countryCode3Digit="are";
+ 			} 					
+ 		}
     	%>
     	
     	Useful links for <%=countryName.toUpperCase()%> : <br>
     	<ul>
     	<li> <a href="http://en.wikipedia.org/wiki/<%=projectVisa %>" target="_blank"> Wikipedia </a> <br></li>
+    	<li> <a href="http://reliefweb.int/country/<%=countryCode3Digit%>" target="_blank"> Relief Web </a> <br></li>
     	<li>  <a href="https://www.cia.gov/library/publications/the-world-factbook/geos/<%=countryCode.toLowerCase() %>.html" target="_blank"> (CIA) World Factbook</a></li>
     	<li> <a href="http://www.projectvisa.com/visainformation/<%=projectVisa %>" target="_blank"> Project Visa</a> <br></li>
+    	<li> <a href="http://www.guardian.co.uk/<%=guardian%>" target="_blank"> NEWS</a> <br></li>
     	<li> <a href="http://www.timeanddate.com/worldclock/results.html?query=<%=countryName.toLowerCase() %>" target="_blank"> Time and Weather</a> <br></li>    	
     	<li> <a href="http://www.logcluster.org/countries" target="_blank"> Logistic Cluster</a> <br></li>
     	<li> <a href="http://ictemergency.wfp.org/web/ictepr/countries/" target="_blank"> Emergency Telecoms Cluster</a> <br></li>
@@ -118,6 +141,8 @@
 		<ul>
 		<li>  <a href="https://www.cia.gov/library/publications/the-world-factbook/index.html" target="_blank"> (CIA) World Factbook</a></li>
 		<li> <a href="http://www.projectvisa.com/" target="_blank"> Project Visa</a> <br></li>
+			<li> <a href="http://reliefweb.int/countries" target="_blank"> Relief Web </a> <br></li>
+		<li> <a href="http://www.guardian.co.uk/world" target="_blank"> NEWS</a> <br></li>
 		<li> <a href="http://www.logcluster.org/countries" target="_blank"> Logistic Cluster</a> <br></li>
 		<li> <a href="http://ictemergency.wfp.org/web/ictepr/countries/" target="_blank"> Emergency Telecoms Cluster</a> <br></li>
 		<li> <a href="http://apps.who.int/bfi/tsy/PerDiem.aspx" target="_blank"> UN DSA Rates</a> <br></li>

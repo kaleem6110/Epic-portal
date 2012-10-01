@@ -108,8 +108,8 @@ public class GeoIPUsersMapPortlet extends MVCPortlet {
 		
 		if( actionType!=null && actionType.equals("changeLocation"))
 		{
-			portletSession.setAttribute("Location-"+user,renderRequest.getParameter("Location-"+user),  PortletSession.APPLICATION_SCOPE);
-			portletSession.setAttribute("code"+user,renderRequest.getParameter("code-"+user),  PortletSession.APPLICATION_SCOPE);
+			portletSession.setAttribute("Location-"+user,renderRequest.getParameter("Location-"+user),  PortletSession.PORTLET_SCOPE);
+			portletSession.setAttribute("code"+user,renderRequest.getParameter("code-"+user),  PortletSession.PORTLET_SCOPE);
 		}
 		
 	

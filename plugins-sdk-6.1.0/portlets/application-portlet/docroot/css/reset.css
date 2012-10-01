@@ -1,0 +1,36 @@
+/* CSS reset */
+* { 
+	margin:0;
+	padding:0;
+}
+html,body .myBody {
+	margin:0;
+	padding:0;
+}
+.myBody table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+.myBody fieldset,.myBody img { 
+	border:0;
+}
+
+.myBody address,.myBody caption,.myBody cite,.myBody ode,.myBody dfn,.myBody th,.myBody var {
+	font-style:normal;
+	font-weight:normal;
+}
+.myBody ol,.myBody ul {
+	/*list-style:none;*/
+}
+.myBody caption,th {
+	text-align:left;
+}
+.myBody h1,.myBody h2,.myBody h3,.myBody h4,.myBody h5,.myBody h6 {
+	font-size:100%;
+	font-weight:normal;
+}
+q:before,q:after {
+	content:'';
+}
+abbr,acronym { border:0;
+}

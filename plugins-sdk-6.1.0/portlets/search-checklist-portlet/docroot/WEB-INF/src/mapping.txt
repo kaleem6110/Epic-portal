@@ -1,0 +1,239 @@
+	3ISO -	 2ISO - 	CIA	-CountryName				
+	AFG  -	 AF   -	af	-AFGHANISTAN		
+	ALB  -   AL	 -	al 	-ALBANIA
+	DZA  -   DZ	 -	ag 	-ALGERIA
+	ASM  -   AS	 -	aq 	-AMERICAN SAMOA
+	AND  -   AD	 -	an 	-ANDORRA
+	AGO  -   AO	 -	ao 	-ANGOLA
+	AIA  -   AI	 -	av 	-ANGUILLA
+	ATA  -   AQ	 -	ay 	-ANTARCTICA
+	ATG  -   AG	 -	ac 	-ANTIGUA AND BARBUDA
+	ARG  -   AR	 -	ar 	-ARGENTINA
+	ARM  -   AM	 -	am 	-ARMENIA
+	ABW  -   AW	 -	aa 	-ARUBA
+	AUS  -   AU	 -	as 	-AUSTRALIA
+	AUT  -   AT	 -	au 	-AUSTRIA
+	AZE  -   AZ	 -	aj 	-AZERBAIJAN
+	BHS  -   BS	 -	bf 	-BAHAMAS
+	BHR  -   BH	 -	ba 	-BAHRAIN
+	BGD  -   BD	 -	bg 	-BANGLADESH
+	BRB  -   BB	 -	bb 	-BARBADOS
+	BLR  -   BY	 -	bo 	-BELARUS
+	BEL  -   BE	 -	be 	-BELGIUM
+	BLZ  -   BZ	 -	bh 	-BELIZE
+	BEN  -   BJ	 -	bn 	-BENIN
+	BMU  -   BM	 -	bd 	-BERMUDA
+	BTN  -   BT	 -	bt 	-BHUTAN
+	BOL  -   BO	 -	bl 	-BOLIVIA
+	BIH  -   BA	 -	bk 	-BOSNIA AND HERZEGOWINA
+	BWA  -   BW	 -	bc 	-BOTSWANA
+	BVT  -   BV	 -	bv 	-BOUVET ISLAND
+	BRA  -   BR	 -	br 	-BRAZIL
+	IOT  -   IO	 -	io 	-BRITISH INDIAN OCEAN TERRITORY
+	BRN  -   BN	 -	bx 	-BRUNEI DARUSSALAM
+	BGR  -   BG	 -	bu 	-BULGARIA
+	BFA  -   BF	 -	uv 	-BURKINA FASO
+	BDI  -   BI	 -	by 	-BURUNDI
+	KHM  -   KH	 -	cb 	-CAMBODIA
+	CMR  -   CM	 -	cm 	-CAMEROON
+	CAN  -   CA	 -	ca 	-CANADA
+	CPV  -   CV	 -	cv 	-CAPE VERDE
+	CYM  -   KY	 -	cj 	-CAYMAN ISLANDS
+	CAF  -   CF	 -	ct 	-CENTRAL AFRICAN REPUBLIC
+	TCD  -   TD	 -	cd 	-CHAD
+	CHL  -   CL	 -	ci 	-CHILE
+	CHN  -   CN	 -	ch 	-CHINA
+	CXR  -   CX	 -	kt 	-CHRISTMAS ISLAND
+	CCK  -   CC	 -	ck 	-COCOS (KEELING) ISLANDS
+	COL  -   CO	 -	co 	-COLOMBIA
+	COM  -   KM	 -	cn 	-COMOROS
+	COG  -   CG	 -	cg 	-CONGO
+	COD  -   CD	 -	cf 	-CONGO, THE DRC
+	COK  -   CK	 -	cw 	-COOK ISLANDS
+	CRI  -   CR	 -	cs 	-COSTA RICA
+	CIV  -   CI	 -	iv 	-COTE D'IVOIRE
+	HRV  -   HR	 -	hr 	-CROATIA (local name: Hrvatska)
+	CUB  -   CU	 -	cu 	-CUBA
+	CYP  -   CY	 -	cc 	-CYPRUS
+	CZE  -   CZ	 -	cy 	-CZECH REPUBLIC
+	DNK  -   DK	 -	ez 	-DENMARK
+	DJI  -   DJ	 -	da 	-DJIBOUTI
+	DMA  -   DM	 -	dx 	-DOMINICA
+	DOM  -   DO	 -	dj 	-DOMINICAN REPUBLIC
+	TMP  -   TP	 -	do 	-EAST TIMOR
+	ECU  -   EC	 -	dr 	-ECUADOR
+	EGY  -   EG	 -	ec 	-EGYPT
+	SLV  -   SV	 -	eg 	-EL SALVADOR
+	GNQ  -   GQ	 -	es 	-EQUATORIAL GUINEA
+	ERI  -   ER	 -	ek 	-ERITREA
+	EST  -   EE	 -	er 	-ESTONIA
+	ETH  -   ET	 -	en 	-ETHIOPIA
+	FLK  -   FK	 -	et 	-FALKLAND ISLANDS (MALVINAS)
+	FRO  -   FO	 -	fk 	-FAROE ISLANDS
+	FJI  -   FJ	 -	fo 	-FIJI
+	FIN  -   FI	 -	fj 	-FINLAND
+	FRA  -   FR	 -	fi 	-FRANCE
+	FXX  -   FX	 -	fr 	-FRANCE, METROPOLITAN
+	GUF  -   GF	 -	fp 	-FRENCH GUIANA
+	PYF  -   PF	 -	fs 	-FRENCH POLYNESIA
+	ATF  -   TF	 -	gb 	-FRENCH SOUTHERN TERRITORIES
+	GAB  -   GA	 -	ga 	-GABON
+	GMB  -   GM	 -	gz 	-GAMBIA
+	GEO  -   GE	 -	gg 	-GEORGIA
+	DEU  -   DE	 -	gm 	-GERMANY
+	GHA  -   GH	 -	gh 	-GHANA
+	GIB  -   GI	 -	gi 	-GIBRALTAR
+	GRC  -   GR	 -	gr 	-GREECE
+	GRL  -   GL	 -	gl 	-GREENLAND
+	GRD  -   GD	 -	gj 	-GRENADA
+	GLP  -   GP	 -	gq 	-GUADELOUPE
+	GUM  -   GU	 -	gt 	-GUAM
+	GTM  -   GT	 -	gk 	-GUATEMALA
+	GIN  -   GN	 -	gv 	-GUINEA
+	GNB  -   GW	 -	pu 	-GUINEA-BISSAU
+	GUY  -   GY	 -	gy 	-GUYANA
+	HTI  -   HT	 -	ha 	-HAITI
+	HMD  -   HM	 -	hm 	-HEARD AND MC DONALD ISLANDS
+	VAT  -   VA	 -	vt 	-HOLY SEE (VATICAN CITY STATE)
+	HND  -   HN	 -	ho 	-HONDURAS
+	HKG  -   HK	 -	hk 	-HONG KONG
+	HUN  -   HU	 -	hu 	-HUNGARY
+	ISL  -   IS	 -	ic 	-ICELAND
+	IND  -   IN	 -	in 	-INDIA
+	IDN  -   ID	 -	id 	-INDONESIA
+	IRN  -   IR	 -	ir	-IRAN (ISLAMIC REPUBLIC OF)
+	IRQ  -   IQ	 -	iz 	-IRAQ
+	IRL  -   IE	 -	ei	-IRELAND
+	ISR  -   IL	 -	is 	-ISRAEL
+	ITA  -   IT	 -	it 	-ITALY
+	JAM  -   JM	 -	jm 	-JAMAICA
+	JPN  -   JP	 -	ja 	-JAPAN
+	JOR  -   JO	 -	jo 	-JORDAN
+	KAZ  -   KZ	 -	kz 	-KAZAKHSTAN
+	KEN  -   KE	 -	ke 	-KENYA
+	KIR  -   KI	 -	kr 	-KIRIBATI
+	PRK  -   KP	 -	kn 	-KOREA, D.P.R.O.
+	KOR  -   KR	 -	ks 	-KOREA, REPUBLIC OF
+	KWT  -   KW	 -	ku 	-KUWAIT
+	KGZ  -   KG	 -	kg 	-KYRGYZSTAN
+	LAO  -   LA	 -	la 	-LAOS
+	LVA  -   LV	 -	lg 	-LATVIA
+	LBN  -   LB	 -	le 	-LEBANON
+	LSO  -   LS	 -	lt 	-LESOTHO
+	LBR  -   LR	 -	li	-LIBERIA
+	LBY  -   LY	 -	ly 	-LIBYAN ARAB JAMAHIRIYA
+	LIE  -   LI	 -	ls 	-LIECHTENSTEIN
+	LTU  -   LT	 -	lh 	-LITHUANIA
+	LUX  -   LU	 -	lu 	-LUXEMBOURG
+	MAC  -   MO	 -	mc 	-MACAU
+	MKD  -   MK	 -	mk 	-MACEDONIA
+	MDG  -   MG	 -	ma 	-MADAGASCAR
+	MWI  -   MW	 -	mi 	-MALAWI
+	MYS  -   MY	 -	my 	-MALAYSIA
+	MDV  -   MV	 -	mv 	-MALDIVES
+	MLI  -   ML	 -	ml 	-MALI
+	MLT  -   MT	 -	mt 	-MALTA
+	MHL  -   MH	 -	rm 	-MARSHALL ISLANDS
+	MTQ  -   MQ	 -	mq 	-MARTINIQUE
+	MRT  -   MR	 -	mr 	-MAURITANIA
+	MUS  -   MU	 -	mp 	-MAURITIUS
+	MYT  -   YT	 -	yt	-MAYOTTE
+	MEX  -   MX	 -	mx	-MEXICO
+	FSM  -   FM	 -	fm 	-MICRONESIA, FEDERATED STATES OF
+	MDA  -   MD	 -	md 	-MOLDOVA, REPUBLIC OF
+	MCO  -   MC	 -	mn 	-MONACO
+	MNG  -   MN	 -	mg 	-MONGOLIA
+	MSR  -   MS	 -	mh 	-MONTSERRAT
+	MAR  -   MA	 -	mo 	-MOROCCO
+	MOZ  -   MZ	 -	mz 	-MOZAMBIQUE
+	MMR  -   MM	 -	bm 	-MYANMAR
+	NAM  -   NA	 -	wa 	-NAMIBIA
+	NRU  -   NR	 -	nr 	-NAURU
+	NPL  -   NP	 -	np 	-NEPAL
+	NLD  -   NL	 -	nl 	-NETHERLANDS
+	ANT  -   AN	 -	nl 	-NETHERLANDS ANTILLES
+	NCL  -   NC	 -	nc 	-NEW CALEDONIA
+	NZL  -   NZ	 -	nz 	-NEW ZEALAND
+	NIC  -   NI	 -	nu 	-NICARAGUA
+	NER  -   NE	 -	ng 	-NIGER
+	NGA  -   NG	 -	ni 	-NIGERIA
+	NIU  -   NU	 -	ne 	-NIUE
+	NFK  -   NF	 -	nf 	-NORFOLK ISLAND
+	MNP  -   MP	 -	cq 	-NORTHERN MARIANA ISLANDS
+	NOR  -   NO	 -	no 	-NORWAY
+	OMN  -   OM	 -	mu 	-OMAN
+	PAK  -   PK	 -	pk 	-PAKISTAN
+	PLW  -   PW	 -	ps 	-PALAU
+	PAN  -   PA	 -	pm 	-PANAMA
+	PNG  -   PG	 -	pp 	-PAPUA NEW GUINEA
+	PRY  -   PY	 -	pa 	-PARAGUAY
+	PER  -   PE	 -	pe 	-PERU
+	PHL  -   PH	 -	rp 	-PHILIPPINES
+	PCN  -   PN	 -	pc 	-PITCAIRN
+	POL  -   PL	 -	pl 	-POLAND
+	PRT  -   PT	 -	po 	-PORTUGAL
+	PRI  -   PR	 -	rq 	-PUERTO RICO
+	QAT  -   QA	 -	qa 	-QATAR
+	REU  -   RE	 -	ro 	-REUNION
+	ROM  -   RO	 -	rs 	-ROMANIA
+	RUS  -   RU	 -	ru	-RUSSIAN FEDERATION
+	RWA  -   RW	 -	rw 	-RWANDA
+	KNA  -   KN	 -	sc 	-SAINT KITTS AND NEVIS
+	LCA  -   LC	 -	st 	-SAINT LUCIA
+	VCT  -   VC	 -	vc 	-SAINT VINCENT AND THE GRENADINES
+	WSM  -   WS	 -	ws 	-SAMOA
+	SMR  -   SM	 -	sm 	-SAN MARINO
+	STP  -   ST	 -	tp 	-SAO TOME AND PRINCIPE
+	SAU  -   SA	 -	sa 	-SAUDI ARABIA
+	SEN  -   SN	 -	sg 	-SENEGAL
+	SYC  -   SC	 -	se 	-SEYCHELLES
+	SLE  -   SL	 -	sl 	-SIERRA LEONE
+	SGP  -   SG	 -	sn 	-SINGAPORE
+	SVK  -   SK	 -	lo 	-SLOVAKIA (Slovak Republic)
+	SVN  -   SI	 -	si 	-SLOVENIA
+	SLB  -   SB	 -	bp 	-SOLOMON ISLANDS
+	SOM  -   SO	 -	so 	-SOMALIA
+	ZAF  -   ZA	 -	sf 	-SOUTH AFRICA
+	SGS  -   GS	 -	sx 	-SOUTH GEORGIA AND SOUTH S.S.
+	ESP  -   ES	 -	sp 	-SPAIN
+	LKA  -   LK	 -	ce 	-SRI LANKA
+	SHN  -   SH	 -	sh 	-ST. HELENA
+	SPM  -   PM	 -	pm 	-ST. PIERRE AND MIQUELON
+	SDN  -   SD	 -	su 	-SUDAN
+	SUR  -   SR	 -	ns 	-SURINAME
+	SJM  -   SJ	 -	sv 	-SVALBARD AND JAN MAYEN ISLANDS
+	SWZ  -   SZ	 -	wz 	-SWAZILAND
+	SWE  -   SE	 -	sw 	-SWEDEN
+	CHE  -   CH	 -	sz 	-SWITZERLAND
+	SYR  -   SY	 -	sy 	-SYRIAN ARAB REPUBLIC
+	TWN  -   TW	 -	tw 	-TAIWAN, PROVINCE OF CHINA
+	TJK  -   TJ	 -	ti 	-TAJIKISTAN
+	TZA  -   TZ	 -	tz 	-TANZANIA, UNITED REPUBLIC OF
+	THA  -   TH	 -	th 	-THAILAND
+	TGO  -   TG	 -	to 	-TOGO
+	TKL  -   TK	 -	tl 	-TOKELAU
+	TON  -   TO	 -	tn 	-TONGA
+	TTO  -   TT	 -	td 	-TRINIDAD AND TOBAGO
+	TUN  -   TN	 -	ts 	-TUNISIA
+	TUR  -   TR	 -	tu 	-TURKEY
+	TKM  -   TM	 -	tx 	-TURKMENISTAN
+	TCA  -   TC	 -	tk 	-TURKS AND CAICOS ISLANDS
+	TUV  -   TV	 -	tv 	-TUVALU
+	UGA  -   UG	 -	ug 	-UGANDA
+	UKR  -   UA	 -	up 	-UKRAINE
+	ARE  -   AE	 -	ae 	-UNITED ARAB EMIRATES
+	GBR  -   GB	 -	uk 	-UNITED KINGDOM
+	USA  -   US	 -	us 	-UNITED STATES
+	UMI  -   UM	 -	um 	-U.S. MINOR ISLANDS
+	URY  -   UY	 -	uy 	-URUGUAY
+	UZB  -   UZ	 -	uz 	-UZBEKISTAN
+	VUT  -   VU	 -	nh 	-VANUATU
+	VEN  -   VE	 -	ve 	-VENEZUELA
+	VNM  -   VN	 -	vm - VIET NAM
+	VGB  -   VG	 -	vq - VIRGIN ISLANDS (BRITISH)
+	VIR  -   VI	 -	wf - VIRGIN ISLANDS (U.S.)
+	WLF  -   WF	 -	we - WALLIS AND FUTUNA ISLANDS
+	ESH  -   EH	 -	wi - WESTERN SAHARA
+	YEM  -   YE	 -	ym - YEMEN
+	ZMB  -   ZM	 -	za - ZAMBIA
+	ZWE  -   ZW	 -	zi - ZIMBABWE 

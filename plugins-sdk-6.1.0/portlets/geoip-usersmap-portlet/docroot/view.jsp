@@ -31,12 +31,14 @@
 
 <%@ page import="com.liferay.geoipusersmap.model.GeoIPUsersMapDAO"%>
 <%@ page import="com.liferay.geoipusersmap.model.MarkVO"%>
+<%@ page import="com.liferay.geoipusersmap.model.PortalUser"%>
 
 <%@ page import="com.liferay.portal.model.User"%>
 <%@ page import="com.liferay.portal.theme.ThemeDisplay"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@ page import="javax.portlet.PortletSession"%>
 <%@ page import="com.maxmind.geoip.CountryCodes"%>
+
 
 
 
@@ -84,14 +86,16 @@
 
 					Integer num_users = GeoIPUsersMapDAO.getNumUsers();
 					int num_marks = markList.size();
+					
+					PortalUser loggedinUser = GeoIPUsersMapDAO.getUserByUserId( new Long(user.getUserId()).toString());
 		%>
 		<table style="width: 100%;">
 			<tr>
 				<td><h4
 						style="width: 100%; text-align: left; color: #4444FF; margin: 0; padding: 0;">&nbsp;EPIC Community</h4></td>
 				<td><h4
-						style="width: 100%; text-align: right; color: #4444FF; margin: 0; padding: 0;"><%=num_users%> EPIC users spread over
-						<%=num_marks%> 	countries
+						style="width: 100%; text-align: right; color: #4444FF; margin: 0; padding: 0;"><%=num_users%> EPIC user(s) online from
+						<%=num_marks%> 	location(s)
 					</h4></td>
 			</tr>
 		</table>
@@ -161,11 +165,18 @@ for (int i = 0; i < num_marks; i++)
 						String ccName = cc.getCountry(cntCode);
 
 						Integer is_auto = mark.getIs_Auto();
-						
+						int isUserOnline=0;
 
 						for (int j = 0; j < userIdList.size(); j++) 
 						{
-							allUserIds = allUserIds + " : "+ userIdList.get(j) ;
+							
+							
+							Object obj1 = renderRequest.getPortletSession().getAttribute("Location-"+user.getUserId(), PortletSession.APPLICATION_SCOPE);
+							if( obj1!=null )
+							{
+								allUserIds = allUserIds + " : "+ userIdList.get(j) ;
+							}
+							
 							if (userIdList.get(j).equals( new Long(user.getUserId()).toString())) 
 							{
 								System.out.println(" User found : "+ user.getUserId() + " is_auto : "+ is_auto );
@@ -193,7 +204,7 @@ for (int i = 0; i < num_marks; i++)
 							isUserFound = false;
 						}%>
 						
-						var allUserIds = "<%=allUserIds%>" + " :LEN:" +"<%=userIdList.size()%>";
+						var allUserIds = "<%=allUserIds%>" ;
 						
 						//alert( allUserIds );
 						
@@ -238,7 +249,25 @@ for (int i = 0; i < num_marks; i++)
 		 <portlet:namespace />mapZoomLong ="<%=mapZoomLong%>";	
 		
 		 
-<%}%>
+<%}
+
+
+	if( loggedinUser!=null)
+	{%>
+		var is_AUTO =  "<%=loggedinUser.getIsAuto()%>";
+		
+		<portlet:namespace />centerAddress = "address:\""+  "<%=loggedinUser.getCountryName()%>"+"\" , zoom:5" ;
+		if(is_AUTO==1)
+		{
+			<portlet:namespace />centerAddress = "latitude:\""+  "<%=loggedinUser.getLatitude()%>" +"\", longitude:\""+  "<%=loggedinUser.getLongitude()%>" + "\" , zoom:10";
+		}
+		
+		
+	<%}
+
+
+
+%>
 
         if( <portlet:namespace />isDefaultUser ==1 )
         {
@@ -250,6 +279,12 @@ for (int i = 0; i < num_marks; i++)
         
         
        		 jQuery("#<portlet:namespace />map").gMap( <portlet:namespace />myObject  );
+       		 
+       		 
+       		 var <portlet:namespace />officeLocations = new GMap2(document.getElementById("<portlet:namespace />officeMap"));  	
+  			<portlet:namespace />officeLocations.setCenter(new GLatLng(24.4419, 55.0), 5);
+  			<portlet:namespace />officeLocations.setMapType(G_HYBRID_MAP );
+  			<portlet:namespace />officeLocations.setUIToDefault();
         
 		
 		

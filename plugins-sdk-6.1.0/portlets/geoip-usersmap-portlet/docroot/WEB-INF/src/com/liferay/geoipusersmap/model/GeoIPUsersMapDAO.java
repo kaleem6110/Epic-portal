@@ -25,6 +25,7 @@ package com.liferay.geoipusersmap.model;
 import com.liferay.geoipusersmap.util.LPortalConnectionPool;
 import com.liferay.geoipusersmap.model.UserVO;
 import com.liferay.geoipusersmap.model.MarkVO;
+import com.liferay.geoipusersmap.model.PortalUser;
 
 import com.liferay.util.portlet.PortletProps;
 
@@ -67,11 +68,58 @@ public class GeoIPUsersMapDAO {
 	//constants
 	private static final String _LOCALNET_ADDRESS = "192.168.0.X"; //CHANGE YOUR LOCALNET ADDRESS HERE TO IGNORE THATS ENTRIES
 	
-	private static final String _GET_USER_DATA = "select userId, screenName, lastLoginIP, companyid, location, latitude, longitude, firstName, lastName, is_auto, emailaddress from User_ where emailaddress<>'default@liferay.com';";
+	private static final String _GET_USER_DATA = "select userId, screenName, lastLoginIP, companyid, location, latitude, longitude, firstName, lastName, is_auto, emailaddress from User_ where emailaddress<>'default@liferay.com' and isonline=true;";
 	private static final String _GET_USER_LOCATION = "select location from  User_  where userid=?;";
 	
 	private static final String _UPDATE_USER_LOCATION = "update User_ set location= ? where userid=?;";
 	private static final String _UPDATE_IS_AUTO_LOCATION = "update User_ set is_auto= ? where userid=?;";
+	private static final String _GET_USER_BY_ID = "select latitude,longitude,location,city,is_auto from  User_  where userid=? and defaultuser=false;";
+	
+	public static PortalUser getUserByUserId( String userId)
+	{
+		System.out.println("#  START getUserByUserId : ##"+userId);
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		LookupService lookupService = null;	
+		PortalUser user =null;
+		
+		try {
+			
+			lookupService = new LookupService(PortletProps.get("maxmind.database.file"),LookupService.GEOIP_MEMORY_CACHE);
+			if (lookupService != null) {			
+				con = LPortalConnectionPool.getConnection();
+			ps = con.prepareStatement(_GET_USER_BY_ID);		
+			if( userId!=null)
+			{
+			ps.setInt(1, Integer.parseInt(userId) );
+			rs=ps.executeQuery();
+			 user = new PortalUser();
+			
+			while (rs.next()) 
+			{
+				
+				user.setLatitude( rs.getString(1) );
+				user.setLongitude( rs.getString(2) );
+				user.setCountryName( rs.getString(3) );
+				user.setCity( rs.getString(4) );
+				user.setIsAuto( rs.getInt(5) );
+				user.setUserId( userId );
+			}	
+			}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {LPortalConnectionPool.cleanUp(con, ps, rs);}
+		System.out.println("#  END getUserByUserId : ##"+user);
+		return user;
+		
+	}
+	
 	public boolean updateUserLocation( String userId, String code, String isAutoSelected )
 	{
 		Connection con = null;
