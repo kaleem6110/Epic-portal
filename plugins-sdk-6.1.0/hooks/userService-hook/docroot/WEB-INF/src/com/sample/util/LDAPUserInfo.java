@@ -28,6 +28,7 @@ public class LDAPUserInfo {
 	public static String msn;
 	public static String skype;
 	public static String sip;
+	public static String vhf;
 	
 	
 	public static String mySpace;

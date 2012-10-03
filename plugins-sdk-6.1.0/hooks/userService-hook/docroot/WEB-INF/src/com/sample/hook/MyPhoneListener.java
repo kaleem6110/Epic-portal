@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.sample.hook;
+package com.liferay.portal.model;
 
 import com.liferay.portal.ModelListenerException;
 

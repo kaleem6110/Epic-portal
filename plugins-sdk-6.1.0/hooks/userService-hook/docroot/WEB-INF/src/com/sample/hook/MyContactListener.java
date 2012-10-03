@@ -55,7 +55,7 @@ public class MyContactListener extends BaseModelListener<Contact>
 	
 	 public void onBeforeCreate(Contact contact) throws ModelListenerException 
 	 {
-		 System.out.println(" #####   START MyContactListener.onBeforeCreate : contact"+ contact );
+		 	System.out.println(" #####   START MyContactListener.onBeforeCreate : contact"+ contact );
 		 	LDAPUserInfo ldapUser = LDAPUtil.getLDAPUserInfo();
 		 	System.out.println( " ldapUser "+ ldapUser );
 		 	contact.setFacebookSn(ldapUser.facebook);
@@ -66,6 +66,8 @@ public class MyContactListener extends BaseModelListener<Contact>
 			contact.setMsnSn(ldapUser.msn);
 			contact.setIcqSn(ldapUser.gtalk);
 			contact.setAimSn(ldapUser.sip);
+			contact.setJabberSn(ldapUser.vhf);
+			
 			
 		 	super.onBeforeCreate(contact);
 			System.out.println("##### END  MyContactListener.onBeforeCreate : contact"+ contact );
@@ -73,8 +75,14 @@ public class MyContactListener extends BaseModelListener<Contact>
 	 public void onAfterCreate(Contact contact) throws ModelListenerException 
 	 {
 		 
-		 	if( flag )
-		 	{
+		 	/*if( (contact.getJabberSn()==null||contact.getJabberSn()!="") &&
+		 			(contact.getMsnSn()!=null||contact.getMsnSn()!="") && 
+		 			(contact.getMySpaceSn()!=null||contact.getMySpaceSn()!="") &&
+		 			(contact.getSkypeSn()!=null||contact.getSkypeSn()!="") &&
+		 			(contact.getIcqSn()!=null||contact.getIcqSn()!="") 
+		 			
+		 			 )
+		 	{*/
 		 		System.out.println(" #####  start MyContactListener.onAfterCreate : contact"+ contact );
 		 	LDAPUserInfo ldapUser = LDAPUtil.getLDAPUserInfo();
 		 	System.out.println( " ldapUser "+ ldapUser );
@@ -86,11 +94,12 @@ public class MyContactListener extends BaseModelListener<Contact>
 			contact.setMsnSn(ldapUser.msn);
 			contact.setIcqSn(ldapUser.gtalk);
 			contact.setAimSn(ldapUser.sip);
-			
-			flag=false;
+			contact.setJabberSn(ldapUser.vhf);
+			super.onAfterCreate(contact);
+		
 			System.out.println(" ##### end  MyContactListener.onAfterCreate : contact"+ contact );
-		 	}
-		 	super.onAfterCreate(contact);
+		 	//}
+		 
 		
 	 }
 	 public void   onAfterUpdate(Contact contact) throws ModelListenerException 

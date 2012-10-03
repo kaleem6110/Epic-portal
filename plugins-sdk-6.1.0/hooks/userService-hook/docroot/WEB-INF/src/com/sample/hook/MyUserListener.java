@@ -16,6 +16,7 @@ package com.sample.hook;
 
 import com.liferay.portal.ModelListenerException;
 
+
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Phone;
@@ -43,6 +44,10 @@ import java.util.List;
 
 import java.util.Map;
 import com.sample.util.LDAPUtil;
+import com.liferay.portal.service.PhoneLocalServiceUtil;
+import com.liferay.portal.service.ListTypeServiceUtil;
+import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.ListType;
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
@@ -70,17 +75,40 @@ public class MyUserListener extends BaseModelListener<User>
 		 	System.out.println(" User ScreenName : "+user.getScreenName() );
 		 	
 		 	super.onBeforeCreate(user);
+		 	
+		 	
 			System.out.println(" #####   MyUserListener.onBeforeCreate : user"+ user );
 	 }
-	 
-		public void   onAfterUpdate(User user) throws ModelListenerException 
+	 	public void   onBeforeUpdate(User user) throws ModelListenerException 
 		{
-			LDAPUtil.screenName=user.getScreenName();
-			System.out.println(" #####   MyUserListener.onAfterUpdate : user"+ user );
+		 System.out.println(" #####   MyUserListener.onBeforeUpdate : user"+ user );
+		 
+		 System.out.println(" #####   MyUserListener.onBeforeUpdate : user"+ user );
+		}
+	 
+		public void onAfterUpdate(User user) throws ModelListenerException 
+		{
+			System.out.println(" #####   START  MyUserListener.onAfterUpdate : iLDAPUtil.isPhoneAdded"+ LDAPUtil.isPhoneAdded );
+			LDAPUtil.screenName=user.getScreenName();			
+			try
+			{	/* Not allowing user to remove all Phone numbers. */
+				if( user.getPhones()!= null && user.getPhones().size()>0  )
+				{
+					LDAPUtil.exportPhones( user.getPhones() );
+				}
+				if( user.getAddresses()== null || user.getAddresses().size()==0  )
+				{
+					//LDAPUtil.importAddresses( user.getAddresses(););
+				}
+			}
+			catch(Exception e){ e.printStackTrace(); }			
+			
+			System.out.println(" #####   END  MyUserListener.onAfterUpdate : user"+ user );			
+		
 		}
 	 
 
-	public void   onAfterCreate(User user) throws ModelListenerException 
+	public void onAfterCreate(User user) throws ModelListenerException 
 	{		
  		try
  		{
@@ -89,8 +117,21 @@ public class MyUserListener extends BaseModelListener<User>
  			List<Address> addressList = user.getAddresses();
  			//Contact contact = user.getContact(); 
  			List<Phone> phoneList = user.getPhones();
- 			//user.setJobTitle("Web Developer");
- 			System.out.println(" #####   MyUserListener.onAfterCreate : addressList : "+addressList + " phoneList " +phoneList+ " user.jobTile "+user.getJobTitle() );
+ 			//user.setJobTitle("Web Developer");               
+ 			try
+			{
+				if( user.getPhones()== null || user.getPhones().size()==0  )
+				{
+					LDAPUtil.importPhones( user);
+				}
+				if( user.getAddresses()== null || user.getAddresses().size()==0  )
+				{
+					LDAPUtil.importAddresses( user);
+				}
+				
+			}
+			catch(Exception e){ e.printStackTrace(); }		
+ 			System.out.println(" #####   MyUserListener.onAfterCreate : addressList ");
  			//super.exportToLDAP(user);
  		}
  		catch (Exception e)

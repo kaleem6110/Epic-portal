@@ -27,20 +27,14 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 		<aui:model-context bean="<%= selContact %>" model="<%= Contact.class %>" />
 
 		<aui:fieldset>
-			<aui:input label="Lync" name="aimSn" />
-
-			<div class="instant-messenger">
-				<aui:input label="Gtalk" name="icqSn" />
-
-				<c:if test="<%= Validator.isNotNull(selContact.getIcqSn()) %>">
-					<img alt="" src="http://web.icq.com/whitepages/online?icq=<%= HtmlUtil.escapeAttribute(selContact.getIcqSn()) %>&img=5" />
-				</c:if>
-			</div>
+			<aui:input label="Lync" name="aimSn" style="width: 180px; " />
 			
-			<aui:input label="msn" name="msnSn" />
-
+			<aui:input label="msn" name="msnSn" style="width: 180px; " />
+			
+			<aui:input label="VHF callsign" name="jabberSn" style="max-width: 180px; " />
+			
 			<div class="instant-messenger">
-				<aui:input label="skype" name="skypeSn" />
+				<aui:input label="skype" name="skypeSn" style="width: 180px; " />
 
 				<c:if test="<%= Validator.isNotNull(selContact.getSkypeSn()) %>">
 					<a href="callto://<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>"><img alt="<liferay-ui:message key="call-this-user" />" src="http://mystatus.skype.com/smallicon/<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>" /></a>
@@ -48,14 +42,26 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 			</div>
 
 			<div class="instant-messenger">
-				<aui:input label="ym" name="ymSn" />
+				<aui:input label="Gtalk" name="icqSn" style="width: 180px; " />
+
+				<c:if test="<%= Validator.isNotNull(selContact.getIcqSn()) %>">
+					<img alt="" src="http://web.icq.com/whitepages/online?icq=<%= HtmlUtil.escapeAttribute(selContact.getIcqSn()) %>&img=5" />
+				</c:if>
+			</div>
+			
+		
+
+		
+
+			<div class="instant-messenger">
+				<aui:input label="ym" name="ymSn" style="width: 180px; "  />
 
 				<c:if test="<%= Validator.isNotNull(selContact.getYmSn()) %>">
 					<img alt="" src="http://opi.yahoo.com/online?u=<%= HtmlUtil.escapeAttribute(selContact.getYmSn()) %>&m=g&t=0" />
 				</c:if>
 			</div>
 
-			<aui:input label="jabber" name="jabberSn" />
+			
 
 			
 		</aui:fieldset>

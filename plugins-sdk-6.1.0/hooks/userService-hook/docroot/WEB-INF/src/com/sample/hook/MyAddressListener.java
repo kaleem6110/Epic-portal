@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.sample.hook;
+package com.liferay.portal.model;
 
 import com.liferay.portal.ModelListenerException;
 
@@ -44,21 +44,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Michael C. Han
- * @author Brian Wing Shun Chan
- * @author Wesley Gong
- * @author Hugo Huijser
+ * 
+ * @author Mohammed Kaleem
  */
 public class MyAddressListener extends BaseModelListener<Address> 
 {
-	static
-	{
-		
-		 System.out.println(" #####   MyAddressListener.static : " );
-	}
+	
 	 public void onBeforeCreate(Address address) throws ModelListenerException 
 	 {
-		 System.out.println(" #####   MyAddressListener.onBeforeCreate : address"+ address );
+		 	System.out.println(" #####   MyAddressListener.onBeforeCreate : address"+ address );
 		 	address.setZip("503060");
 		 	address.setStreet1("Dubai Pearl Building");
 		 	address.setStreet2("Bur Dubai");
@@ -67,6 +61,16 @@ public class MyAddressListener extends BaseModelListener<Address>
 		 	address.setPrimary(true);
 			
 		 	super.onBeforeCreate(address);
+			
+	 }
+	 public void onAfterUpdate(Address address) throws ModelListenerException 
+	 {
+		 	System.out.println(" #####   START MyAddressListener.onAfterUpdate : address"+ address );
+		 
+			
+		 	super.onAfterUpdate(address);
+		 	
+		 	System.out.println(" #####   END MyAddressListener.onAfterUpdate : address"+ address );
 			
 	 }
 
