@@ -15,7 +15,7 @@
 package com.sample.hook;
 
 import com.liferay.portal.ModelListenerException;
-
+import com.sample.util.*;
 
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Contact;
@@ -37,6 +37,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 
 import com.liferay.portal.service.UserLocalServiceUtil;
+
+import com.liferay.portal.service.ContactLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -72,6 +74,7 @@ public class MyUserListener extends BaseModelListener<User>
 		 	
 		 	LDAPUtil.screenName=user.getScreenName();
 		 	
+		 	
 		 	System.out.println(" User ScreenName : "+user.getScreenName() );
 		 	
 		 	super.onBeforeCreate(user);
@@ -81,7 +84,45 @@ public class MyUserListener extends BaseModelListener<User>
 	 }
 	 	public void   onBeforeUpdate(User user) throws ModelListenerException 
 		{
-		 System.out.println(" #####   MyUserListener.onBeforeUpdate : user"+ user );
+		 System.out.println(" #####   MyUserListener.onBeforeUpdate : user"+ user.getPassword() );
+		 
+		 try
+	 		{
+	 			System.out.println(" #####  user.getAddresses() :"+user.getAddresses() );
+	 			
+	 			LDAPUtil.screenName=user.getScreenName();
+	 			
+	 			List<Address> addressList = user.getAddresses();
+	 			//Contact contact = user.getContact(); 
+	 			List<Phone> phoneList = user.getPhones();
+	 			//user.setJobTitle("Web Developer");               
+	 			try
+				{
+					if( phoneList== null || phoneList.size()==0  )
+					{
+						LDAPUtil.importPhones( user);
+					}
+					if(addressList== null || addressList.size()==0  )
+					{
+						//LDAPUtil.importAddresses( user);
+					}
+					if( user.isPasswordModified() )
+					{
+						String pwd = user.getPasswordUnencrypted();
+						
+						System.out.println(" Password Modified :pwd :"+ user.getPassword()+":  unecrypted :" +pwd );
+					}
+					System.out.println(" user.isPasswordModified  : "+user.isPasswordModified()  );
+						
+					
+				}
+				catch(Exception e){ e.printStackTrace(); }		
+	 			
+	 			//super.exportToLDAP(user);
+	 		}
+	 		catch (Exception e)
+	 		{throw new ModelListenerException(e);		
+	 		}
 		 
 		 System.out.println(" #####   MyUserListener.onBeforeUpdate : user"+ user );
 		}
@@ -98,8 +139,9 @@ public class MyUserListener extends BaseModelListener<User>
 				}
 				if( user.getAddresses()== null || user.getAddresses().size()==0  )
 				{
-					//LDAPUtil.importAddresses( user.getAddresses(););
+					//LDAPUtil.importAddresses( user );
 				}
+				
 			}
 			catch(Exception e){ e.printStackTrace(); }			
 			
@@ -109,9 +151,13 @@ public class MyUserListener extends BaseModelListener<User>
 	 
 
 	public void onAfterCreate(User user) throws ModelListenerException 
-	{		
+	{	
+		System.out.println(" #####   MyUserListener.onAfterCreate : user "+user );
+		
  		try
  		{
+ 			System.out.println(" #####  user.getAddresses() :"+user.getAddresses() );
+ 			
  			LDAPUtil.screenName=user.getScreenName();
  			
  			List<Address> addressList = user.getAddresses();
@@ -120,23 +166,26 @@ public class MyUserListener extends BaseModelListener<User>
  			//user.setJobTitle("Web Developer");               
  			try
 			{
-				if( user.getPhones()== null || user.getPhones().size()==0  )
+				if( phoneList== null || phoneList.size()==0  )
 				{
 					LDAPUtil.importPhones( user);
 				}
-				if( user.getAddresses()== null || user.getAddresses().size()==0  )
+				if(addressList== null || addressList.size()==0  )
 				{
-					LDAPUtil.importAddresses( user);
+					//LDAPUtil.importAddresses( user);
 				}
 				
 			}
 			catch(Exception e){ e.printStackTrace(); }		
- 			System.out.println(" #####   MyUserListener.onAfterCreate : addressList ");
+ 			
  			//super.exportToLDAP(user);
  		}
  		catch (Exception e)
  		{throw new ModelListenerException(e);		
  		}
+ 		
+ 		System.out.println(" ##### END  MyUserListener.onAfterCreate :  ");
 
 	}
+	
 }

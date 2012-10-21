@@ -222,82 +222,65 @@ public class LDAPUtil
 		System.out.println(" ############## END  LDAPUtil.getAttributeValueListByName #####################"+commuriList );
 		return commuriList;
 	}
-	public static void updateContact(Contact  contact)
+	public static void beforeUpdateContact( Contact contact)
 	{
-		
-		System.out.println(" ############## START  LDAPUtil.updateContact ##################### screenName: "+screenName );		
+		System.out.println(" ############## START  LDAPUtil.beforeUpdateContact ##################### contact: "+contact );		
 		try 
-		{
-			/* get a handle to an Initial DirContext */
-			DirContext ctx = getLDAPContext();			
-			ModificationItem[] mods = new ModificationItem[1];		 
-			 Attributes attrs = getAllAttributes( ctx );
-			 
-			 List<String> commuriList = getAttributeValueListByName( attrs ,"communicationUri");
-			 List<String> resultList = new ArrayList<String>();	
-			
-			 //getIcqSn -> gtalk, sip/lync ->aim 
-			 Attribute mod0 = new BasicAttribute("communicationUri");
-			 int msnflag=0;
-			 int skypeflag=0;
-			 int lyncflag=0;
-			 int gtalkflag=0;
-			 int vhfflag=0;
+		{		
+			 DirContext ctx = getLDAPContext();		
+			 Attributes attrs = getAllAttributes( ctx );			 
+			 List<String> commuriList = getAttributeValueListByName( attrs ,"communicationUri");		
 			 if( commuriList!=null)
 			 {
-				 for (int j = 0; j < commuriList.size(); j++)
-				{
+			 	for (int j = 0; j < commuriList.size(); j++)
+			 	 {
 					String temp = commuriList.get(j);	
-					 System.out.println(" ############## temp : "+temp );
-					if (temp.indexOf("gtalk") != -1&& contact.getIcqSn()!=null && contact.getIcqSn()!="") {
-						mod0.add("gtalk:chat?jid="+contact.getIcqSn().trim());gtalkflag=1;				
-					} else if (temp.indexOf("msnim") != -1&& contact.getMsnSn()!=null && contact.getMsnSn()!="") {
-						mod0.add("msnim:chat?contact="+contact.getMsnSn().trim());msnflag=1;
-					} else if (temp.indexOf("skype") != -1&& contact.getSkypeSn()!=null && contact.getSkypeSn()!="") {
-						mod0.add("skype:"+contact.getSkypeSn().trim());skypeflag=1;	 
-					} else if (temp.indexOf("sip") != -1 && contact.getAimSn()!=null && contact.getAimSn()!="") {
-						mod0.add("sip:"+contact.getAimSn().trim());lyncflag=1;
-					} else if (temp.indexOf("VHF") != -1 && contact.getJabberSn()!=null && contact.getJabberSn()!="") {
-						mod0.add("VHFcallsign:"+contact.getJabberSn().trim());vhfflag=1;
-					}
+					if (temp.indexOf("gtalk") != -1){ temp = temp.replace("gtalk:chat?jid=","");contact.setIcqSn( temp ); }
+					else if (temp.indexOf("msnim") != -1){ temp = temp.replace("msnim:chat?contact=",""); contact.setMsnSn( temp );	}
+					else if (temp.indexOf("skype") != -1) { temp = temp.replace("skype:","");contact.setSkypeSn( temp );}
+					else if (temp.indexOf("sip") != -1 ){ temp = temp.replace("sip:",""); contact.setAimSn( temp );}
+					else if (temp.indexOf("VHF") != -1  ){ temp = temp.replace("VHFcallsign:",""); contact.setJabberSn( temp );	}					
 				}
-			 if( msnflag==0 && contact.getMsnSn()!=null&& contact.getMsnSn()!="" )
-			 {
-				 mod0.add("msnim:chat?contact="+contact.getMsnSn().trim() );msnflag=1;
-			 }
-			 if( skypeflag==0 && contact.getSkypeSn()!=null && contact.getSkypeSn()!="")
-			 {
-				 mod0.add("skype:"+contact.getSkypeSn().trim() );skypeflag=1;
-			 }
-			 if( gtalkflag==0 && contact.getIcqSn()!=null&& contact.getIcqSn()!="" )
-			 {
-				 mod0.add("gtalk:chat?jid="+contact.getIcqSn().trim() );gtalkflag=1;	
-			 }
-			 if( lyncflag==0 && contact.getAimSn()!=null&& contact.getAimSn()!="" )
-			 {
-				 mod0.add("sip:"+contact.getAimSn().trim() );lyncflag=1;
-			 }
-			 if( vhfflag==0 && contact.getJabberSn()!=null&& contact.getJabberSn()!="" )
-			 {
-				 mod0.add("VHFcallsign:"+contact.getJabberSn().trim() );vhfflag=1;
-			 }
-			 System.out.println(" ############## 3333333");
-			 
+			}			
+		}
+		catch(Exception e) { e.printStackTrace(); }
+		System.out.println(" ############## END  LDAPUtil.beforeUpdateContact #####################contact: "+contact );		
+		
+	}
+	public static void updateContact(Contact  contact, boolean isBefore)
+	{
+		
+		System.out.println(" ############## START  LDAPUtil.updateContact ##################### contact: "+contact );		
+		try 
+		{	
 			
+			 DirContext ctx = getLDAPContext();	
 			
-			 if( lyncflag>0|| gtalkflag>0|| skypeflag>0|| msnflag>0|| vhfflag>0)
-			 {
-				 mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod0);
-				 ctx.modifyAttributes("ldap://ldap-dev.globalepic.lu:389/uid="+screenName +",ou=users,ou=people,dc=emergency,dc=lu", mods);
-			 }
-			 }
+			 ModificationItem[]  mods= new ModificationItem[1];			
+			 //getIcqSn -> gtalk, sip/lync ->aim 
+			 Attribute mod0 = new BasicAttribute("communicationUri");			 
+			 String skype = contact.getSkypeSn();
+			 String sip = contact.getAimSn();
+			 String gtalk = contact.getIcqSn();
+			 String msn = contact.getMsnSn();
+			 String vhf = contact.getJabberSn();
 			 
-			 System.out.println(" ############## 44444444");
+			 /*mod0.add(contact.getJabberSn());	
+			 mod0.add(contact.getIcqSn());
+			 mod0.add(contact.getMsnSn());	
+			 mod0.add(contact.getSkypeSn());	
+			 mod0.add(contact.getAimSn());	*/
+			 if(contact.getJabberSn()!=null&& contact.getJabberSn()!="" ) mod0.add("VHFcallsign:"+contact.getJabberSn());	
+			 if(contact.getIcqSn()!=null&& contact.getIcqSn()!="" ) mod0.add("gtalk:chat?jid="+contact.getIcqSn());
+			 if(contact.getMsnSn()!=null&& contact.getMsnSn()!="" )  mod0.add("msnim:chat?contact="+contact.getMsnSn());	
+			 if(contact.getSkypeSn()!=null&& contact.getSkypeSn()!="" ) mod0.add("skype:"+contact.getSkypeSn());	
+			 if(contact.getAimSn()!=null&& contact.getAimSn()!="" )  mod0.add("sip:"+contact.getAimSn());
+			 
+			 mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod0);
+			 ctx.modifyAttributes("ldap://ldap-dev.globalepic.lu:389/uid="+screenName +",ou=users,ou=people,dc=emergency,dc=lu", mods);
+			 System.out.println(" ############## 44444444 contact :"+ contact );
 			 //mods[1] = new ModificationItem(DirContext.ADD_ATTRIBUTE, mod1);
 			// mods[1] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod1);
-
-			
-			 
 			
 		}
 		catch(Exception e) { e.printStackTrace(); }
@@ -349,7 +332,8 @@ public class LDAPUtil
 			if( phoneList!=null && phoneList.size()>0)
 			{
 			for( String phn : phoneList )
-			{				
+			{		
+				
 				if( phn.indexOf("Office")!=-1 || phn.indexOf("office")!=-1)
 				{
 					String phnArray [] = phn.split("Office:");
@@ -420,7 +404,39 @@ public class LDAPUtil
  		{
 			LDAPUserInfo  ldapuser = getLDAPUserInfo();
 			System.out.println(ldapuser.street + " ldapuser.street "+ addressType_business );
-			AddressLocalServiceUtil.addAddress(user.getUserId(), Address.class.getName(), PortalUtil.getClassNameId(Address.class.getName()), ldapuser.street, "", "", "DUBAI", ldapuser.postalCode, 1, 217, addressType_business, true, true); 
+			List<Address> addressList = user.getAddresses();
+			long addressId = user.getContactId();
+			if(addressList!=null || addressList.size()>0 )
+			{
+				for( Address address : addressList )
+				{
+					addressId = address.getAddressId();
+					System.out.println("  inside for : addressId : "+ addressId );
+				}
+			}
+			
+			System.out.println("  outisde : addressId : "+ addressId );
+			Address address = AddressLocalServiceUtil.createAddress( addressId );
+			
+			address.setUserName(user.getScreenName() );
+			address.setUserId(user.getUserId() );
+			address.setStreet1("street1" );
+			address.setStreet2("street2" );
+			address.setStreet2("street3" );
+			address.setCity(ldapuser.city );
+			address.setZip(ldapuser.postalCode );		
+			address.setCountryId(217 );
+			address.setRegionId(1001 );
+			address.setTypeId(addressType_personal );
+			//address.setClassPK( Contact.class.getName());
+			address.setPrimary(false);
+			address.setMailing(true);
+			address.setCompanyId( user.getCompanyId() );
+			
+			System.out.println(ldapuser.street + " ldapuser.street : address "+ address  );
+			
+			//AddressLocalServiceUtil.addAddress(user.getUserId(), Address.class.getName(), PortalUtil.getClassNameId(Address.class.getName()), ldapuser.street, "", "", "DUBAI", ldapuser.postalCode, 1, 217, addressType_personal, true, true);
+			AddressLocalServiceUtil.addAddress( address );
  		}
 		catch (Exception e)
  		{
@@ -437,6 +453,7 @@ public class LDAPUtil
 			DirContext ctx = getLDAPContext();			
 			ModificationItem[] mods = new ModificationItem[ 1];		 
 			 Attribute mod0 = new BasicAttribute("telephoneNumber");
+			
 			//Attributes attrs = getAllAttributes( ctx );
 			int i=0;
 			for( Phone phone : phoneList)
@@ -458,11 +475,12 @@ public class LDAPUtil
 			 {
 				 mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod0);
 				 ctx.modifyAttributes("ldap://ldap-dev.globalepic.lu:389/uid="+screenName +",ou=users,ou=people,dc=emergency,dc=lu", mods);
+				  
 			 } 
 			 System.out.println(" ############## 44444444");
 		}
 		catch(Exception e) { e.printStackTrace(); }
-		System.out.println(" ############## END  LDAPUtil.updateContact #####################");
+		System.out.println(" ############## END  LDAPUtil.exportPhones #####################");
 		
 	}
 }

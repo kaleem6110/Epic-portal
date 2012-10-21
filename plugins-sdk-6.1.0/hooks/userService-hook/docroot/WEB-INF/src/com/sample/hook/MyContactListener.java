@@ -66,24 +66,24 @@ public class MyContactListener extends BaseModelListener<Contact>
 			contact.setMsnSn(ldapUser.msn);
 			contact.setIcqSn(ldapUser.gtalk);
 			contact.setAimSn(ldapUser.sip);
-			contact.setJabberSn(ldapUser.vhf);
-			
+			contact.setJabberSn(ldapUser.vhf);		
 			
 		 	super.onBeforeCreate(contact);
 			System.out.println("##### END  MyContactListener.onBeforeCreate : contact"+ contact );
 	 }
 	 public void onAfterCreate(Contact contact) throws ModelListenerException 
 	 {
+		 System.out.println(" #####  start MyContactListener.onAfterCreate : contact"+ contact );
 		 
-		 	/*if( (contact.getJabberSn()==null||contact.getJabberSn()!="") &&
+		 	if( (contact.getJabberSn()==null||contact.getJabberSn()!="") &&
 		 			(contact.getMsnSn()!=null||contact.getMsnSn()!="") && 
 		 			(contact.getMySpaceSn()!=null||contact.getMySpaceSn()!="") &&
 		 			(contact.getSkypeSn()!=null||contact.getSkypeSn()!="") &&
 		 			(contact.getIcqSn()!=null||contact.getIcqSn()!="") 
 		 			
 		 			 )
-		 	{*/
-		 		System.out.println(" #####  start MyContactListener.onAfterCreate : contact"+ contact );
+		 	{
+		 		
 		 	LDAPUserInfo ldapUser = LDAPUtil.getLDAPUserInfo();
 		 	System.out.println( " ldapUser "+ ldapUser );
 		 	contact.setFacebookSn(ldapUser.facebook);
@@ -97,16 +97,26 @@ public class MyContactListener extends BaseModelListener<Contact>
 			contact.setJabberSn(ldapUser.vhf);
 			super.onAfterCreate(contact);
 		
-			System.out.println(" ##### end  MyContactListener.onAfterCreate : contact"+ contact );
-		 	//}
+			
+		 	}
+		 	System.out.println(" ##### end  MyContactListener.onAfterCreate : contact"+ contact );
 		 
 		
 	 }
+	 public void   onBeforeUpdate(Contact contact) throws ModelListenerException 
+		{
+			
+				System.out.println(" #####  KALEEM START MyContactListener.onBeforeUpdate : Contact"+ contact );
+				LDAPUtil.beforeUpdateContact(contact );
+				//LDAPUtil.updateContact(contact,true );
+				
+				System.out.println(" #####   END MyContactListener.onBeforeUpdate : Contact"+ contact );
+		}
 	 public void   onAfterUpdate(Contact contact) throws ModelListenerException 
 	{
 		
 			System.out.println(" #####   START MyContactListener.onAfterUpdate : Contact"+ contact );
-			LDAPUtil.updateContact(contact );
+			LDAPUtil.updateContact(contact,false );
 			
 			System.out.println(" #####   END MyContactListener.onAfterUpdate : Contact"+ contact );
 	}
