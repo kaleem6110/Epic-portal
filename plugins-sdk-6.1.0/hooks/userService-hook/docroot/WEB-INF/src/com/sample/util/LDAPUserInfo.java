@@ -46,6 +46,8 @@ public class LDAPUserInfo {
 	public static String surName;
 	public static String givenName;
 	
+	public static String personalTitle;
+	
 	
 
 }

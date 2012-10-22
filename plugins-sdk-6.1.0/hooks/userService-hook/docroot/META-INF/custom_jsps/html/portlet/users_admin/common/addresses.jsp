@@ -96,13 +96,15 @@ else {
 
 					<aui:input fieldParam='<%= "addressStreet1_" + addressesIndex %>' name="street1" />
 
-					<aui:input fieldParam='<%= "addressStreet2_" + addressesIndex %>' name="street2" />
+					<aui-cc:input fieldParam='<%= "addressStreet2_" + addressesIndex %>' name="street2" />
 
-					<aui:input fieldParam='<%= "addressStreet3_" + addressesIndex %>' name="street3" />
+					<aui-cc:input fieldParam='<%= "addressStreet3_" + addressesIndex %>' name="street3" />
+					
+						<aui:input fieldParam='<%= "addressCity" + addressesIndex %>' name="city" />
 
 					<aui:select label="country" name='<%= "addressCountryId" + addressesIndex %>' />
-
-					<aui:select label="region" cssClass="hide" name='<%= "addressRegionId" + addressesIndex %>' />
+<!-- Region removed from here Kaleem Mohammed 21/OCT/2012 -->
+					
 				</aui:column>
 
 				<aui:column columnWidth="50">
@@ -110,12 +112,10 @@ else {
 
 					<aui:input fieldParam='<%= "addressZip" + addressesIndex %>' label="postal-code" name="zip" />
 
-					<aui:input fieldParam='<%= "addressCity" + addressesIndex %>' name="city" />
+				
 
-					<aui:input checked="<%= address.isPrimary() %>" cssClass="primary-ctrl hide" id='<%= "addressPrimary" + addressesIndex %>' inlineLabel="left" label="primary" name="addressPrimary" type="radio" value="<%= addressesIndex %>" />
-
-					<aui:input cssClass="mailing-ctrl hide" fieldParam='<%= "addressMailing" + addressesIndex %>' inlineLabel="left" name="mailing" />
-				</aui:column>
+					<!--  Primary and Mailing is removed  Kaleem mohammed 21/OCT/2012 -->
+				 </aui:column>
 			</div>
 		</div>
 
@@ -146,48 +146,4 @@ else {
 
 	<aui:input name="addressesIndexes" type="hidden" value="<%= StringUtil.merge(addressesIndexes) %>" />
 </aui:fieldset>
-
-<aui:script use="liferay-auto-fields,liferay-dynamic-select">
-	Liferay.once(
-		'formNavigator:reveal<portlet:namespace />addresses',
-		function() {
-			var addresses = new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />addresses > fieldset',
-					fieldIndexes: '<portlet:namespace />addressesIndexes',
-					on: {
-						'clone': function(event) {
-							var row = event.row;
-							var guid = event.guid;
-
-							var dynamicSelects = row.one('select[data-componentType=dynamic_select]');
-
-							if (dynamicSelects) {
-								dynamicSelects.detach('change');
-							}
-
-							new Liferay.DynamicSelect(
-								[
-									{
-										select: '<portlet:namespace />addressCountryId' + guid,
-										selectData: Liferay.Address.getCountries,
-										selectDesc: 'name',
-										selectId: 'countryId',
-										selectVal: ''
-									},
-									{
-										select: '<portlet:namespace />addressRegionId' + guid,
-										selectData: Liferay.Address.getRegions,
-										selectDesc: 'name',
-										selectId: 'regionId',
-										selectVal: ''
-									}
-								]
-							);
-						}
-					}
-				}
-			).render();
-		}
-	);
-</aui:script>
+<!-- script deleted Kaleem Mohammed ( +/- feature ) 21/OCT/2012 -->

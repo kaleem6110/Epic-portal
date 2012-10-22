@@ -36,7 +36,7 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 			<div class="social-network">
 				<aui:input label="LinkedIn" name="mySpaceSn" />
 
-				<img alt="<liferay-ui:message key="facebook" />" src="<%= themeDisplay.getPathThemeImages() %>/users_admin/facebook.jpg" />
+				<img alt="<liferay-ui:message key="facebook" />" src="<%= themeDisplay.getPathThemeImages() %>/users_admin/linkedin.png" />
 
 			</div>
 

@@ -66,11 +66,11 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 				<aui:field-wrapper name="screenName" >
 					<%= selUser.getScreenName() %>
 
-					<aui:input name="screenName" type="hidden"  readonly="readonly" value="<%= selUser.getScreenName() %>" />
+					<aui-cc:input name="screenName" type="hidden"   value="<%= selUser.getScreenName() %>" />
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="screenName" readonly="readonly"/>
+				<aui-cc:input name="screenName" readonly="true"  />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -84,7 +84,7 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 			<aui:field-wrapper name="emailAddress">
 				<%= selUser.getDisplayEmailAddress() %>
 
-				<aui:input name="emailAddress" type="hidden" value="<%= selUser.getEmailAddress() %>" />
+				<aui:input name="emailAddress" type="hidden" readonly="readonly" value="<%= selUser.getEmailAddress()  %>" />
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
@@ -98,8 +98,8 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 				displayEmailAddressUser.setEmailAddress(displayEmailAddressUser.getDisplayEmailAddress());
 			}
 			%>
-
-			<aui:input bean="<%= displayEmailAddressUser %>" model="<%= User.class %>" name="emailAddress">
+<!-- for readonly here -->
+			<aui:input bean="<%= displayEmailAddressUser %>" model="<%= User.class %>" name="emailAddress" >
 				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 					<aui:validator name="required" />
 				</c:if>
@@ -112,7 +112,7 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 
 	<aui:input name="firstName" />
 
-	<aui:input name="middleName" cssClass="hide" style="display:none;" />
+	<!--  MiddleName input deleted KaleemMohammed 21/OCT/2012 -->
 
 	<liferay-ui:error exception="<%= ContactLastNameException.class %>" message="please-enter-a-valid-last-name" />
 
@@ -122,7 +122,7 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 		</c:if>
 	</aui:input>
 
-	<aui:select bean="<%= selContact %>" label="suffix" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" model="<%= Contact.class %>" name="suffixId" showEmptyOption="<%= true %>" style="display:none;"/>
+	<!--  Suffix label deleted KaleemMohammed 21/OCT/2012 -->
 </aui:fieldset>
 
 <aui:fieldset column="<%= true %>" cssClass="aui-w50">

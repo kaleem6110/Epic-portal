@@ -11,8 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.sample.hook;
 
-package com.liferay.portal.model;
+import com.sample.util.*;
 
 import com.liferay.portal.ModelListenerException;
 
@@ -53,21 +54,41 @@ public class MyAddressListener extends BaseModelListener<Address>
 	 public void onBeforeCreate(Address address) throws ModelListenerException 
 	 {
 		 	System.out.println(" #####   MyAddressListener.onBeforeCreate : address"+ address );
-		 	address.setZip("503060");
+		 	
+		 	LDAPUtil.importAddresses(address);
+		 	
+		 	/*address.setZip("503060");
 		 	address.setStreet1("Dubai Pearl Building");
 		 	address.setStreet2("Bur Dubai");
 		 	address.setStreet3("Flat No 303");
 		 	address.setCity("Dubai");
-		 	address.setPrimary(true);
+		 	address.setPrimary(true);*/
 			
 		 	super.onBeforeCreate(address);
+			
+	 }
+	 public void onBeforeUpdate(Address address) throws ModelListenerException 
+	 {
+		 	System.out.println(" #####   MyAddressListener.onBeforeUpdate : address"+ address );
+		 	
+		 	//LDAPUtil.importAddresses(address);
+		 	
+		 	/*address.setZip("503060");
+		 	address.setStreet1("Dubai Pearl Building");
+		 	address.setStreet2("Bur Dubai");
+		 	address.setStreet3("Flat No 303");
+		 	address.setCity("Dubai");
+		 	address.setPrimary(true);*/
+			
+		 	super.onBeforeUpdate(address);
 			
 	 }
 	 public void onAfterUpdate(Address address) throws ModelListenerException 
 	 {
 		 	System.out.println(" #####   START MyAddressListener.onAfterUpdate : address"+ address );
 		 
-			
+		 	LDAPUtil.exportAddress( address);
+		 	
 		 	super.onAfterUpdate(address);
 		 	
 		 	System.out.println(" #####   END MyAddressListener.onAfterUpdate : address"+ address );

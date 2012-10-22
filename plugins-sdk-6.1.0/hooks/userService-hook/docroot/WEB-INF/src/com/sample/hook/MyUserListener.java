@@ -95,7 +95,8 @@ public class MyUserListener extends BaseModelListener<User>
 	 			List<Address> addressList = user.getAddresses();
 	 			//Contact contact = user.getContact(); 
 	 			List<Phone> phoneList = user.getPhones();
-	 			//user.setJobTitle("Web Developer");               
+	 			//user.setJobTitle("Web Developer");  
+	 			
 	 			try
 				{
 					if( phoneList== null || phoneList.size()==0  )
@@ -106,12 +107,7 @@ public class MyUserListener extends BaseModelListener<User>
 					{
 						//LDAPUtil.importAddresses( user);
 					}
-					if( user.isPasswordModified() )
-					{
-						String pwd = user.getPasswordUnencrypted();
-						
-						System.out.println(" Password Modified :pwd :"+ user.getPassword()+":  unecrypted :" +pwd );
-					}
+					
 					System.out.println(" user.isPasswordModified  : "+user.isPasswordModified()  );
 						
 					
@@ -140,6 +136,16 @@ public class MyUserListener extends BaseModelListener<User>
 				if( user.getAddresses()== null || user.getAddresses().size()==0  )
 				{
 					//LDAPUtil.importAddresses( user );
+				}
+				if( user.isPasswordModified() )
+				{
+					//String pwd = user.getPasswordUnencrypted();						
+					//LDAPUtil.updatePassword( pwd );
+					String pwd = user.getPassword();
+					if( pwd!=null && pwd.length()> 0 )
+					LDAPUtil.updatePassword( user.getPassword() );
+					
+					System.out.println(" Password Modified :pwd :"+ user.getPassword()+":  unecrypted :" +pwd );
 				}
 				
 			}

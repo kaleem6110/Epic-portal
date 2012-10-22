@@ -124,7 +124,7 @@ public class LDAPUtil
 		String FILTER = "(&(objectClass=top) ((uid=" + screenName + ")))";
 
 		// limit returned attributes to those we care about
-		String[] attrIDs = { "sn", "cn", "mobile", "postalCode","personalTitle",
+		String[] attrIDs = { "sn", "cn", "mobile", "postalCode","personalTitle","localityName",
 				"telephoneNumber", "street", "communicationUri", "o", "c" ,"uid"};
 
 		SearchControls ctls = new SearchControls();
@@ -161,13 +161,17 @@ public class LDAPUtil
 			Object postalCodeObj = attrs.get("postalCode");
 			Object organizationObj = attrs.get("mobile");
 			Object streetObj = attrs.get("street");
-			Object countryObj = attrs.get("street");
+			Object countryObj = attrs.get("c");
+			Object personalTitleObj = attrs.get("personalTitle");
+			Object localityNameObj = attrs.get("localityName");
 			
 			if( mobileObj!=null) ldapUserInfo.mobile = mobileObj.toString();
-			if( postalCodeObj!=null) ldapUserInfo.postalCode = postalCodeObj.toString();
+			if( postalCodeObj!=null) ldapUserInfo.postalCode = postalCodeObj.toString().replace("postalCode:","");
 			if( organizationObj!=null) ldapUserInfo.organization = organizationObj.toString();
-			if( streetObj!=null) ldapUserInfo.street = streetObj.toString();
+			if( streetObj!=null) ldapUserInfo.street = streetObj.toString().replace("street:","");
 			if( countryObj!=null) ldapUserInfo.country = countryObj.toString();
+			if( personalTitleObj!=null) ldapUserInfo.personalTitle = personalTitleObj.toString();
+			if( localityNameObj!=null) ldapUserInfo.city = localityNameObj.toString();
 						
 			System.out.println(" ############## ldapUserInfo  "+ldapUserInfo );
 			System.out.println(" ############## ldapUserInfo.surName  "+ldapUserInfo.surName + " communicationUri :"+ attrs.get("communicationUri") );
@@ -245,6 +249,26 @@ public class LDAPUtil
 		}
 		catch(Exception e) { e.printStackTrace(); }
 		System.out.println(" ############## END  LDAPUtil.beforeUpdateContact #####################contact: "+contact );		
+		
+	}
+	public static void updatePassword(String password)
+	{
+		
+		System.out.println(" ############## START  LDAPUtil.updatePassword ##################### password: "+password );		
+		try 
+		{	
+			
+			 DirContext ctx = getLDAPContext();				
+			 ModificationItem[]  mods= new ModificationItem[1];	
+			 Attribute mod0 = new BasicAttribute("userPassword");	
+			 mod0.add("{SHA}"+password );
+			 mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod0);
+			 ctx.modifyAttributes("ldap://ldap-dev.globalepic.lu:389/uid="+screenName +",ou=users,ou=people,dc=emergency,dc=lu", mods);
+			 System.out.println(" ############## 44444444 password :"+ password );
+			 
+		}
+		catch(Exception e){ e.printStackTrace(); }
+		System.out.println(" ############## START  LDAPUtil.updatePassword ##################### password: "+password );		
 		
 	}
 	public static void updateContact(Contact  contact, boolean isBefore)
@@ -340,9 +364,9 @@ public class LDAPUtil
 					if( phnArray==null || phnArray.length==0 ) phnArray = phn.split("office:");	
 					String number = phnArray[1];
 					String ext="";
-					if( number.indexOf("-")!=-1)
+					if( number.indexOf("x")!=-1)
 					{
-						phnArray = number.split("-");
+						phnArray = number.split("x");
 						ext=phnArray[1];
 						number=phnArray[0];
 					}
@@ -397,13 +421,13 @@ public class LDAPUtil
 
 		
 	}
-	public static void importAddresses(User user )
+	public static void importAddresses(Address address )
 	{
-		System.out.println(" ############## START  LDAPUtil.importAddresses user "+user);
+		System.out.println(" ############## START  LDAPUtil.importAddresses address "+address);
 		try
  		{
 			LDAPUserInfo  ldapuser = getLDAPUserInfo();
-			System.out.println(ldapuser.street + " ldapuser.street "+ addressType_business );
+			/*System.out.println(ldapuser.street + " ldapuser.street "+ addressType_business );
 			List<Address> addressList = user.getAddresses();
 			long addressId = user.getContactId();
 			if(addressList!=null || addressList.size()>0 )
@@ -416,33 +440,61 @@ public class LDAPUtil
 			}
 			
 			System.out.println("  outisde : addressId : "+ addressId );
-			Address address = AddressLocalServiceUtil.createAddress( addressId );
+			Address address = AddressLocalServiceUtil.createAddress( addressId );*/
 			
-			address.setUserName(user.getScreenName() );
-			address.setUserId(user.getUserId() );
-			address.setStreet1("street1" );
-			address.setStreet2("street2" );
-			address.setStreet2("street3" );
+			String street = ldapuser.street;
+			String postalCode = ldapuser.postalCode;
+			if( street!=null && street!="" ) street = street.replaceAll("street:","");
+			if( postalCode!=null && postalCode!="" ) postalCode = postalCode.replaceAll("postalCode:","");
+				
+			address.setStreet1(ldapuser.street );
+			address.setStreet2("" );
+			address.setStreet3("" );
 			address.setCity(ldapuser.city );
 			address.setZip(ldapuser.postalCode );		
 			address.setCountryId(217 );
-			address.setRegionId(1001 );
-			address.setTypeId(addressType_personal );
+			//address.setRegionId(1001 );
+			//address.setTypeId(addressType_personal );
 			//address.setClassPK( Contact.class.getName());
-			address.setPrimary(false);
-			address.setMailing(true);
-			address.setCompanyId( user.getCompanyId() );
+			address.setPrimary(true);
+			//address.setMailing(true);
+			///address.setCompanyId( user.getCompanyId() );
 			
 			System.out.println(ldapuser.street + " ldapuser.street : address "+ address  );
 			
 			//AddressLocalServiceUtil.addAddress(user.getUserId(), Address.class.getName(), PortalUtil.getClassNameId(Address.class.getName()), ldapuser.street, "", "", "DUBAI", ldapuser.postalCode, 1, 217, addressType_personal, true, true);
-			AddressLocalServiceUtil.addAddress( address );
+			//AddressLocalServiceUtil.addAddress( address );
  		}
 		catch (Exception e)
  		{
  			e.printStackTrace();	
  		}
-		System.out.println(" ############## END  LDAPUtil.importAddresses user "+user);
+		System.out.println(" ############## END  LDAPUtil.importAddresses address ");
+	}
+	public static void exportAddress(Address address )
+	{		
+		System.out.println(" ############## START  LDAPUtil.exportPhones ##################### address: "+address );		
+		try 
+		{
+			/* get a handle to an Initial DirContext */
+			DirContext ctx = getLDAPContext();			
+			ModificationItem[] mods = new ModificationItem[ 3];		 
+			 Attribute mod0 = new BasicAttribute("postalCode");
+			 Attribute mod1 = new BasicAttribute("street");
+			 Attribute mod2 = new BasicAttribute("localityName");
+		
+			 mod0.add( address.getZip() );
+			 mod1.add( address.getStreet1() );
+			 mod2.add( address.getCity() );
+			 
+			 mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod0);
+			 mods[1] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod1);
+			 mods[2] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod2);
+			 ctx.modifyAttributes("ldap://ldap-dev.globalepic.lu:389/uid="+screenName +",ou=users,ou=people,dc=emergency,dc=lu", mods);
+			 
+			 
+		}
+		catch(Exception e){e.printStackTrace(); }
 	}
 	public static void exportPhones(List<Phone>  phoneList )
 	{		
@@ -459,13 +511,15 @@ public class LDAPUtil
 			for( Phone phone : phoneList)
 			 {
 				 System.out.println(" ############## phone type Id :"+phone.getTypeId() );
+				 String ext = phone.getExtension();
+				 if(ext==null)ext="";
 				 switch(phone.getTypeId())
 				 {
-				 	case listType_business :	mod0.add("Office:"+phone.getNumber().trim()); break;
-					case listType_mobile   :	mod0.add("Mobile:"+phone.getNumber().trim()); break;
-					case listType_wave :		mod0.add("WAVE:"+phone.getNumber().trim());	  break;
-					case listType_thuraya :		mod0.add("Thuraya:"+phone.getNumber().trim()); break;												
-					case listType_foodsat :		mod0.add("Foodsat:"+phone.getNumber().trim());break;
+				 	case listType_business :	mod0.add("Office:"+phone.getNumber().trim() ); break;
+					case listType_mobile   :	mod0.add("Mobile:"+phone.getNumber().trim() ); break;
+					case listType_wave :		mod0.add("WAVE:"+phone.getNumber().trim() );	  break;
+					case listType_thuraya :		mod0.add("Thuraya:"+phone.getNumber().trim() ); break;												
+					case listType_foodsat :		mod0.add("Foodsat:"+phone.getNumber().trim() );break;
 				 }
 				
 				 i++;
