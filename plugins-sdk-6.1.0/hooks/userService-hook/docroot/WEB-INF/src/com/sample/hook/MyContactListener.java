@@ -56,7 +56,7 @@ public class MyContactListener extends BaseModelListener<Contact>
 	 public void onBeforeCreate(Contact contact) throws ModelListenerException 
 	 {
 		 	System.out.println(" #####   START MyContactListener.onBeforeCreate : contact"+ contact );
-		 	LDAPUserInfo ldapUser = LDAPUtil.getLDAPUserInfo();
+		 	LDAPUserInfo ldapUser = LDAPUtil.getLDAPUserInfoByContact(contact);
 		 	System.out.println( " ldapUser "+ ldapUser );
 		 	contact.setFacebookSn(ldapUser.facebook);
 			contact.setYmSn(ldapUser.ym);
@@ -84,7 +84,7 @@ public class MyContactListener extends BaseModelListener<Contact>
 		 			 )
 		 	{
 		 		
-		 	LDAPUserInfo ldapUser = LDAPUtil.getLDAPUserInfo();
+		 	LDAPUserInfo ldapUser = LDAPUtil.getLDAPUserInfoByContact( contact);
 		 	System.out.println( " ldapUser "+ ldapUser );
 		 	contact.setFacebookSn(ldapUser.facebook);
 			contact.setYmSn(ldapUser.ym);

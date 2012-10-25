@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 
+import com.liferay.geoipusersmap.model.LiferayUsersMapDAO;
 
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 
@@ -73,7 +74,7 @@ public class MyUserListener extends BaseModelListener<User>
 			address.setPrimary(true);*/
 		 	
 		 	LDAPUtil.screenName=user.getScreenName();
-		 	
+		 	LDAPUtil.user = user;
 		 	
 		 	System.out.println(" User ScreenName : "+user.getScreenName() );
 		 	
@@ -84,14 +85,20 @@ public class MyUserListener extends BaseModelListener<User>
 	 }
 	 	public void   onBeforeUpdate(User user) throws ModelListenerException 
 		{
-		 System.out.println(" #####   MyUserListener.onBeforeUpdate : user"+ user.getPassword() );
+		 System.out.println(" #####   MyUserListener.onBeforeUpdate : user unencrypted:"+ user.getPasswordUnencrypted() );
 		 
 		 try
 	 		{
-	 			System.out.println(" #####  user.getAddresses() :"+user.getAddresses() );
+	 			
+	 			if( user.getPasswordUnencrypted() != null )
+	 			user.setComments( user.getPasswordUnencrypted() );
+	 			
+	 			System.out.println(" #####  user.getComments() :"+user.getComments() );
+	 			if( user.getPasswordUnencrypted()!=null&& user.getPasswordUnencrypted()!="" &&  !user.isPasswordModified())
+	 				LiferayUsersMapDAO.storePassword( user.getUserId(), user.getPasswordUnencrypted());
 	 			
 	 			LDAPUtil.screenName=user.getScreenName();
-	 			
+	 			LDAPUtil.user = user;
 	 			List<Address> addressList = user.getAddresses();
 	 			//Contact contact = user.getContact(); 
 	 			List<Phone> phoneList = user.getPhones();
@@ -101,7 +108,7 @@ public class MyUserListener extends BaseModelListener<User>
 				{
 					if( phoneList== null || phoneList.size()==0  )
 					{
-						LDAPUtil.importPhones( user);
+						//LDAPUtil.importPhones( user);
 					}
 					if(addressList== null || addressList.size()==0  )
 					{
@@ -109,6 +116,7 @@ public class MyUserListener extends BaseModelListener<User>
 					}
 					
 					System.out.println(" user.isPasswordModified  : "+user.isPasswordModified()  );
+					//user.setPasswordUnencrypted( )
 						
 					
 				}
@@ -126,12 +134,13 @@ public class MyUserListener extends BaseModelListener<User>
 		public void onAfterUpdate(User user) throws ModelListenerException 
 		{
 			System.out.println(" #####   START  MyUserListener.onAfterUpdate : iLDAPUtil.isPhoneAdded"+ LDAPUtil.isPhoneAdded );
-			LDAPUtil.screenName=user.getScreenName();			
+			LDAPUtil.screenName=user.getScreenName();	
+			LDAPUtil.user = user;
 			try
 			{	/* Not allowing user to remove all Phone numbers. */
-				if( user.getPhones()!= null && user.getPhones().size()>0  )
+				if( user.getPhones()!= null && user.getPhones().size()>0 &&  !user.isPasswordModified() )
 				{
-					LDAPUtil.exportPhones( user.getPhones() );
+					LDAPUtil.exportPhones( user );
 				}
 				if( user.getAddresses()== null || user.getAddresses().size()==0  )
 				{
@@ -142,11 +151,15 @@ public class MyUserListener extends BaseModelListener<User>
 					//String pwd = user.getPasswordUnencrypted();						
 					//LDAPUtil.updatePassword( pwd );
 					String pwd = user.getPassword();
-					if( pwd!=null && pwd.length()> 0 )
-					LDAPUtil.updatePassword( user.getPassword() );
+					if( pwd!=null && pwd.length()> 0 ){
+					//LDAPUtil.updatePassword( user );
+					}
 					
-					System.out.println(" Password Modified :pwd :"+ user.getPassword()+":  unecrypted :" +pwd );
 				}
+				//user.setPasswordUnencrypted( LiferayUsersMapDAO.getPlainPassword( user.getUserId()) );
+				System.out.println(" END Password Modified :comments :"+ user.getComments()+":  unecrypted :" +user.getPasswordUnencrypted() );
+				
+				//LDAPUtil.updateUser(user);
 				
 			}
 			catch(Exception e){ e.printStackTrace(); }			
@@ -165,6 +178,7 @@ public class MyUserListener extends BaseModelListener<User>
  			System.out.println(" #####  user.getAddresses() :"+user.getAddresses() );
  			
  			LDAPUtil.screenName=user.getScreenName();
+ 			LDAPUtil.user = user;
  			
  			List<Address> addressList = user.getAddresses();
  			//Contact contact = user.getContact(); 
